@@ -1,0 +1,112 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Broder(1997)]{Broder1997}
+Andrei~Z. Broder.
+\newblock On the resemblance and containment of documents.
+\newblock In \emph{Proceedings of the Compression and Complexity of Sequences},
+  pages 21--29. IEEE, 1997.
+
+\bibitem[Broder et~al.(2000)Broder, Charikar, Frieze, and
+  Mitzenmacher]{Broder2000}
+Andrei~Z. Broder, Moses Charikar, Alan~M. Frieze, and Michael Mitzenmacher.
+\newblock Min-wise independent permutations.
+\newblock \emph{Journal of Computer and System Sciences}, 60\penalty0
+  (3):\penalty0 630--659, 2000.
+
+\bibitem[Charikar(2002)]{Charikar2002}
+Moses~S. Charikar.
+\newblock Similarity estimation techniques from rounding algorithms.
+\newblock In \emph{Proceedings of the 34th Annual ACM Symposium on Theory of
+  Computing}, pages 380--388, 2002.
+\newblock \doi{10.1145/509907.509965}.
+
+\bibitem[Devlin et~al.(2019)Devlin, Chang, Lee, and Toutanova]{Devlin2019}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock In \emph{Proceedings of the 2019 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies}, pages 4171--4186, 2019.
+\newblock \doi{10.18653/v1/N19-1423}.
+
+\bibitem[Dietterich(1998)]{Dietterich1998}
+Thomas~G. Dietterich.
+\newblock Approximate statistical tests for comparing supervised classification
+  learning algorithms.
+\newblock \emph{Neural Computation}, 10\penalty0 (7):\penalty0 1895--1923,
+  1998.
+\newblock \doi{10.1162/089976698300017197}.
+
+\bibitem[Efron(1979)]{Efron1979}
+Bradley Efron.
+\newblock Bootstrap methods: Another look at the jackknife.
+\newblock \emph{Annals of Statistics}, 7\penalty0 (1):\penalty0 1--26, 1979.
+\newblock \doi{10.1214/AOS/1176344552}.
+
+\bibitem[Efron and Tibshirani(1993)]{EfronTibshirani1993}
+Bradley Efron and Robert~J. Tibshirani.
+\newblock \emph{An Introduction to the Bootstrap}.
+\newblock Chapman and Hall, 1993.
+
+\bibitem[Hahn(2013)]{Hahn2013}
+Mathew Hahn.
+\newblock Molecular fingerprints in cheminformatics: A review.
+\newblock \emph{Computational Chemistry: Reviews of Current Trends},
+  8:\penalty0 1--32, 2013.
+
+\bibitem[Hu et~al.(2019)Hu, Lu, Li, and Chen]{Hu2019}
+Baotian Hu, Zhengdong Lu, Hang Li, and Qingcai Chen.
+\newblock Convolutional neural network architectures for matching natural
+  language sentences.
+\newblock \emph{IEEE Transactions on Knowledge and Data Engineering},
+  31\penalty0 (11):\penalty0 2078--2090, 2019.
+
+\bibitem[Iyer et~al.(2017)Iyer, Dandekar, and Csernai]{Iyer2017}
+Shankar Iyer, Nikhil Dandekar, and Kornél Csernai.
+\newblock First {Quora} dataset release: Question pairs.
+\newblock
+  \url{https://quoradata.quora.com/First-Quora-Dataset-Release-Question-Pairs},
+  2017.
+
+\bibitem[Maggiora et~al.(2014)Maggiora, Vogt, Stumpfe, and
+  Bajorath]{Maggiora2014}
+Giuseppe Maggiora, Martin Vogt, Dagmar Stumpfe, and J\"{u}rgen Bajorath.
+\newblock Molecular similarity in medicinal chemistry.
+\newblock \emph{Journal of Medicinal Chemistry}, 57\penalty0 (8):\penalty0
+  3186--3204, 2014.
+\newblock \doi{10.1021/jm401411z}.
+
+\bibitem[McNemar(1947)]{Mcnemar1947}
+Quinn McNemar.
+\newblock Note on the sampling error of the difference between correlated
+  proportions or percentages.
+\newblock \emph{Psychometrika}, 12\penalty0 (2):\penalty0 153--157, 1947.
+\newblock \doi{10.1007/BF02295996}.
+
+\bibitem[Rogers and Hahn(2010)]{Rogers2010}
+David Rogers and Mathew Hahn.
+\newblock Extended-connectivity fingerprints.
+\newblock \emph{Journal of Chemical Information and Modeling}, 50\penalty0
+  (5):\penalty0 742--754, 2010.
+\newblock \doi{10.1021/ci100050t}.
+
+\bibitem[{Scikit-learn Developers}(2024)]{ScikitLearnTfidf}
+{Scikit-learn Developers}.
+\newblock {TfidfVectorizer} --- scikit-learn documentation.
+\newblock
+  \url{https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html},
+  2024.
+
+\bibitem[{Stanford NLP Group}()]{StanfordIR}
+{Stanford NLP Group}.
+\newblock Near-duplicates and shingling.
+\newblock
+  \url{https://nlp.stanford.edu/IR-book/html/htmledition/near-duplicates-and-shingling-1.html}.
+\newblock Information Retrieval Book.
+
+\end{thebibliography}
