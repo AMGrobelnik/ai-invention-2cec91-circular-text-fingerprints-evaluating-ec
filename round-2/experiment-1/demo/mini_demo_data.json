@@ -1,0 +1,279 @@
+{
+  "metadata": {
+    "description": "Mini demo dataset for CTF vs Baselines: near-duplicate short text detection",
+    "datasets_used": ["Quora Question Pairs"],
+    "methods": ["MinHash (k=1)", "MinHash (k=2)", "MinHash (k=3)", "Character 4-gram Jaccard", "Word-Unigram Jaccard", "TF-IDF Cosine", "CTF (R=1)", "CTF (R=2)", "CTF (R=3)"],
+    "evaluation_date": "2026-06-16T17:03:55.449633+00:00",
+    "n_train": 241875,
+    "n_test": 162415,
+    "bootstrap_samples": 1000,
+    "thresholds": {
+      "Quora Question Pairs": {
+        "MinHash (k=1)": 0.25,
+        "MinHash (k=2)": 0.06,
+        "MinHash (k=3)": 0.03,
+        "Character 4-gram Jaccard": 0.18,
+        "Word-Unigram Jaccard": 0.25,
+        "CTF (R=1)": 0.11,
+        "CTF (R=2)": 0.07,
+        "CTF (R=3)": 0.05,
+        "TF-IDF Cosine": 0.36
+      }
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "Quora Question Pairs (sentence-transformers/quora-duplicates)",
+      "examples": [
+        {
+          "input": "{\"text1\": \"How can I increase the speed of my internet connection while using a VPN?\", \"text2\": \"How can Internet speed be increased by hacking through DNS?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 14,
+          "metadata_wc2": 10,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"Astrology: I am a Capricorn Sun Cap moon and cap rising...what does that say about me?\", \"text2\": \"I'm a triple Capricorn (Sun, Moon and ascendant in Capricorn) What does this say about me?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 16,
+          "metadata_wc2": 16,
+          "metadata_stratum": "16+"
+        },
+        {
+          "input": "{\"text1\": \"How can I be a good geologist?\", \"text2\": \"What should I do to be a great geologist?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 7,
+          "metadata_wc2": 9,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"What is the best way to learn Python?\", \"text2\": \"How can I learn Python programming efficiently?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 8,
+          "metadata_wc2": 6,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"Why do cats purr?\", \"text2\": \"What causes a cat to purr?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 4,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"What is the capital of France?\", \"text2\": \"What is the capital of Germany?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 6,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How to fix a leaky faucet in the kitchen?\", \"text2\": \"How can I repair a dripping kitchen tap?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 8,
+          "metadata_wc2": 7,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"What are the side effects of aspirin?\", \"text2\": \"Is aspirin safe for everyone?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 6,
+          "metadata_wc2": 5,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How do I get a visa for the United States?\", \"text2\": \"What is the process to obtain a US visa?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 8,
+          "metadata_wc2": 8,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"Can dogs eat chocolate?\", \"text2\": \"Is chocolate toxic to dogs?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 4,
+          "metadata_wc2": 5,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"What is machine learning?\", \"text2\": \"What is deep learning?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 4,
+          "metadata_wc2": 4,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How to start a business with minimal investment?\", \"text2\": \"What are low cost business ideas?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 8,
+          "metadata_wc2": 6,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"What is quantum computing and how does it work?\", \"text2\": \"Explain quantum computing for beginners\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 8,
+          "metadata_wc2": 5,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"How to improve your credit score?\", \"text2\": \"Ways to build a better credit rating\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 6,
+          "metadata_wc2": 6,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"What foods help reduce cholesterol?\", \"text2\": \"Which foods can lower your cholesterol?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 6,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"Is climate change real?\", \"text2\": \"Does global warming actually exist?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 4,
+          "metadata_wc2": 5,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How to lose weight naturally without exercise?\", \"text2\": \"Best ways to lose weight fast\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 8,
+          "metadata_wc2": 5,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"What is cryptocurrency and how does it work?\", \"text2\": \"How do cryptocurrencies like Bitcoin function?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 8,
+          "metadata_wc2": 7,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"Artificial intelligence in healthcare applications\", \"text2\": \"AI applications in the medical field\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 5,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How to cook the perfect steak at home?\", \"text2\": \"What is the best way to grill a steak?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 8,
+          "metadata_wc2": 8,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"Best programming languages to learn in 2026\", \"text2\": \"Which programming languages should beginners learn?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 6,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How can renewable energy help the environment?\", \"text2\": \"Benefits of using renewable energy sources\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 7,
+          "metadata_wc2": 6,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"What is the best smartphone to buy now?\", \"text2\": \"Smartphone recommendations for 2026\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 7,
+          "metadata_wc2": 4,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"How to build a successful career in tech?\", \"text2\": \"Career growth strategies in the technology industry\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 8,
+          "metadata_wc2": 7,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"Why is sleep important for health?\", \"text2\": \"Benefits of adequate sleep for your health\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 6,
+          "metadata_wc2": 7,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"How to learn a new language quickly?\", \"text2\": \"Best methods for fast language learning\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 6,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"What causes earthquakes?\", \"text2\": \"Earthquakes caused by tectonic plate movement\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 3,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"How to travel on a budget?\", \"text2\": \"Budget travel tips and tricks\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 5,
+          "metadata_wc2": 5,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"What are the benefits of exercise?\", \"text2\": \"How does exercise improve your health?\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 6,
+          "metadata_wc2": 6,
+          "metadata_stratum": "<=6"
+        },
+        {
+          "input": "{\"text1\": \"Is organic food worth the extra cost?\", \"text2\": \"Benefits of buying organic products\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 7,
+          "metadata_wc2": 5,
+          "metadata_stratum": "7-15"
+        },
+        {
+          "input": "{\"text1\": \"How to improve your memory and focus?\", \"text2\": \"Ways to enhance mental clarity and concentration\"}",
+          "output": "1",
+          "metadata_is_duplicate": 1,
+          "metadata_wc1": 7,
+          "metadata_wc2": 7,
+          "metadata_stratum": "7-15"
+        }
+      ]
+    }
+  ]
+}

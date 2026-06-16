@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "method_name": "Circular Text Fingerprints (CTF) vs MinHash",
+    "description": "Near-duplicate detection on QQP using ECFP-inspired token neighborhood hashing vs MinHash 3-gram shingling",
+    "parameters": {
+      "n_pairs_sampled": 10000,
+      "n_minhash_functions": 128,
+      "ctf_radii": [1, 2, 3],
+      "ctf_window": 1,
+      "shingle_k": 3,
+      "seed": 42
+    },
+    "success": true,
+    "criterion_met": "full",
+    "criterion": "CTF F1 >= MinHash F1 + 0.03 overall, or +0.02 in short-text stratum (<40 chars)",
+    "minhash_baseline_f1": 0.6667,
+    "ctf_best_f1": 0.7555,
+    "ctf_best_radius": 3,
+    "improvement_f1_points": 0.0888,
+    "findings": "CTF (R=3) outperforms MinHash by 0.0888 F1 points overall (>= 0.03 threshold). Hypothesis SUPPORTED.",
+    "thresholds": {
+      "minhash": 0.0,
+      "ctf_r1": 0.09,
+      "ctf_r2": 0.06,
+      "ctf_r3": 0.04
+    },
+    "results_by_method": {
+      "minhash": {
+        "overall": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "tp": 1000,
+          "fp": 1000,
+          "tn": 0,
+          "fn": 0,
+          "count": 2000
+        },
+        "short": {
+          "precision": 0.3333,
+          "recall": 1.0,
+          "f1": 0.5,
+          "tp": 3,
+          "fp": 6,
+          "tn": 0,
+          "fn": 0,
+          "count": 9
+        },
+        "medium": {
+          "precision": 0.58,
+          "recall": 1.0,
+          "f1": 0.7342,
+          "tp": 529,
+          "fp": 383,
+          "tn": 0,
+          "fn": 0,
+          "count": 912
+        },
+        "long": {
+          "precision": 0.4337,
+          "recall": 1.0,
+          "f1": 0.605,
+          "tp": 468,
+          "fp": 611,
+          "tn": 0,
+          "fn": 0,
+          "count": 1079
+        }
+      },
+      "ctf": {
+        "radius_1": {
+          "overall": {
+            "precision": 0.6409,
+            "recall": 0.919,
+            "f1": 0.7551,
+            "tp": 919,
+            "fp": 515,
+            "tn": 485,
+            "fn": 81,
+            "count": 2000
+          }
+        },
+        "radius_2": {
+          "overall": {
+            "precision": 0.6482,
+            "recall": 0.903,
+            "f1": 0.7547,
+            "tp": 903,
+            "fp": 490,
+            "tn": 510,
+            "fn": 97,
+            "count": 2000
+          }
+        },
+        "radius_3": {
+          "overall": {
+            "precision": 0.6347,
+            "recall": 0.933,
+            "f1": 0.7555,
+            "tp": 933,
+            "fp": 537,
+            "tn": 463,
+            "fn": 67,
+            "count": 2000
+          }
+        }
+      }
+    },
+    "split_sizes": {
+      "train": 6000,
+      "val": 2000,
+      "test": 2000
+    }
+  },
+  "datasets": [
+    {
+      "dataset": "quora_question_pairs",
+      "examples": [
+        {
+          "input": "Question 1: What's the best way to sell fine art?\nQuestion 2: How do I buy fine art?",
+          "output": "not_duplicate",
+          "predict_minhash": "duplicate",
+          "predict_ctf_r1": "duplicate",
+          "predict_ctf_r2": "duplicate",
+          "predict_ctf_r3": "duplicate",
+          "metadata_minhash_score": 0.0,
+          "metadata_ctf_r1_score": 0.12,
+          "metadata_ctf_r2_score": 0.0769,
+          "metadata_ctf_r3_score": 0.0566,
+          "metadata_char_length": 59,
+          "metadata_length_bucket": "medium"
+        },
+        {
+          "input": "Question 1: What is the basic of quantum physics?\nQuestion 2: What is an intuitive way to understand the basics of quantum physics?",
+          "output": "not_duplicate",
+          "predict_minhash": "duplicate",
+          "predict_ctf_r1": "duplicate",
+          "predict_ctf_r2": "duplicate",
+          "predict_ctf_r3": "duplicate",
+          "metadata_minhash_score": 0.0781,
+          "metadata_ctf_r1_score": 0.3103,
+          "metadata_ctf_r2_score": 0.2128,
+          "metadata_ctf_r3_score": 0.1515,
+          "metadata_char_length": 106,
+          "metadata_length_bucket": "long"
+        },
+        {
+          "input": "Question 1: Why do ice hockey players get swapped out every few minutes when soccer players can play for 45 minutes at a time?\nQuestion 2: Do pro soccer players wear a new pair of shoes every game?",
+          "output": "not_duplicate",
+          "predict_minhash": "duplicate",
+          "predict_ctf_r1": "not_duplicate",
+          "predict_ctf_r2": "not_duplicate",
+          "predict_ctf_r3": "not_duplicate",
+          "metadata_minhash_score": 0.0,
+          "metadata_ctf_r1_score": 0.082,
+          "metadata_ctf_r2_score": 0.0526,
+          "metadata_ctf_r3_score": 0.0388,
+          "metadata_char_length": 172,
+          "metadata_length_bucket": "long"
+        }
+      ]
+    }
+  ]
+}
