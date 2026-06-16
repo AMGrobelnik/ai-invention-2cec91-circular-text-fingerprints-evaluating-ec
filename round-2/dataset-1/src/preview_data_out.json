@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "description": "Paraphrase/near-duplicate detection datasets for binary classification evaluation",
+    "task": "near_duplicate_detection",
+    "label_mapping": {
+      "0": "not_duplicate",
+      "1": "duplicate"
+    },
+    "datasets_selected": [
+      "paws_wiki_test",
+      "glue_qqp_validation"
+    ],
+    "selection_rationale": "QQP provides 40k short question pairs with diverse length strata ideal for near-duplicate short text evaluation. PAWS-Wiki provides 8k adversarial high-lexical-overlap pairs from Wikipedia for cross-d..."
+  },
+  "datasets": [
+    {
+      "dataset": "glue_qqp_validation",
+      "examples": [
+        {
+          "input": "{\"question1\": \"Why are African-Americans so beautiful?\", \"question2\": \"Why are hispanics so beautiful?\"}",
+          "output": "not_duplicate",
+          "metadata_label_int": 0,
+          "metadata_stratum": "short",
+          "metadata_word_count_q1": 5,
+          "metadata_word_count_q2": 5,
+          "metadata_task_type": "binary_classification",
+          "metadata_row_index": 0
+        },
+        {
+          "input": "{\"question1\": \"I want to pursue PhD in Computer Science about social network,what is the open problem in social networks?\", \"question2\": \"I handle social media for a non-profit. Should I start going t...",
+          "output": "not_duplicate",
+          "metadata_label_int": 0,
+          "metadata_stratum": "long",
+          "metadata_word_count_q1": 18,
+          "metadata_word_count_q2": 25,
+          "metadata_task_type": "binary_classification",
+          "metadata_row_index": 1
+        },
+        {
+          "input": "{\"question1\": \"Is there a reason why we should travel alone?\", \"question2\": \"What are some reasons to travel alone?\"}",
+          "output": "duplicate",
+          "metadata_label_int": 1,
+          "metadata_stratum": "medium",
+          "metadata_word_count_q1": 9,
+          "metadata_word_count_q2": 7,
+          "metadata_task_type": "binary_classification",
+          "metadata_row_index": 2
+        }
+      ]
+    },
+    {
+      "dataset": "paws_wiki_test",
+      "examples": [
+        {
+          "input": "{\"sentence1\": \"This was a series of nested angular standards , so that measurements in azimuth and elevation could be done directly in polar coordinates relative to the ecliptic .\", \"sentence2\": \"This...",
+          "output": "not_duplicate",
+          "metadata_label_int": 0,
+          "metadata_stratum": "long",
+          "metadata_word_count_s1": 28,
+          "metadata_word_count_s2": 28,
+          "metadata_task_type": "binary_classification",
+          "metadata_source_id": 1
+        },
+        {
+          "input": "{\"sentence1\": \"His father emigrated to Missouri in 1868 but returned when his wife became ill and before the rest of the family could also go to America .\", \"sentence2\": \"His father emigrated to Ameri...",
+          "output": "not_duplicate",
+          "metadata_label_int": 0,
+          "metadata_stratum": "long",
+          "metadata_word_count_s1": 27,
+          "metadata_word_count_s2": 27,
+          "metadata_task_type": "binary_classification",
+          "metadata_source_id": 2
+        },
+        {
+          "input": "{\"sentence1\": \"In January 2011 , the Deputy Secretary General of FIBA Asia , Hagop Khajirian , inspected the venue together with SBP - President Manuel V. Pangilinan .\", \"sentence2\": \"In January 2011 ...",
+          "output": "duplicate",
+          "metadata_label_int": 1,
+          "metadata_stratum": "long",
+          "metadata_word_count_s1": 27,
+          "metadata_word_count_s2": 22,
+          "metadata_task_type": "binary_classification",
+          "metadata_source_id": 3
+        }
+      ]
+    }
+  ]
+}

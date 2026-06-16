@@ -1,0 +1,4 @@
+{"ts": 1781626804.9224386, "tool": "aii_web_tools__search", "cost_usd": 0.001, "query": "\"GLUE MRPC Microsoft Research Paraphrase Corpus\" benchmark paper", "count": 4}
+{"ts": 1781626825.85118, "tool": "aii_web_tools__search", "cost_usd": 0.001, "query": "\"PAWS paraphrase adversaries word scrambling\" dataset NLP", "count": 0}
+{"ts": 1781626826.489932, "tool": "aii_web_tools__search", "cost_usd": 0.001, "query": "\"Quora Question Pairs dataset benchmark duplicate detection\" paper", "count": 0}
+{"ts": 1781626826.5006204, "tool": "aii_web_tools__search", "cost_usd": 0.001, "query": "\"sentence-transformers quora-duplicates\" dataset", "count": 5}

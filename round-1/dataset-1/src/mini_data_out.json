@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "description": "Quora Question Pairs for near-duplicate detection: CTF vs MinHash evaluation",
+    "source": "HuggingFace Hub — sentence-transformers/quora-duplicates (pair-class)",
+    "total_examples": 404290,
+    "duplicate_count": 149263,
+    "non_duplicate_count": 255027
+  },
+  "datasets": [
+    {
+      "dataset": "sentence-transformers/quora-duplicates (pair-class)",
+      "examples": [
+        {
+          "input": "{\"text1\": \"What is the step by step guide to invest in share market in india?\", \"text2\": \"What is the step by step guide to invest in share market?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_word_count_1": 14,
+          "metadata_word_count_2": 12,
+          "metadata_char_count_1": 66,
+          "metadata_char_count_2": 57,
+          "metadata_row_index": 0,
+          "metadata_task_type": "binary_classification",
+          "metadata_n_classes": 2
+        },
+        {
+          "input": "{\"text1\": \"What is the story of Kohinoor (Koh-i-Noor) Diamond?\", \"text2\": \"What would happen if the Indian government stole the Kohinoor (Koh-i-Noor) diamond back?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_word_count_1": 8,
+          "metadata_word_count_2": 13,
+          "metadata_char_count_1": 51,
+          "metadata_char_count_2": 88,
+          "metadata_row_index": 1,
+          "metadata_task_type": "binary_classification",
+          "metadata_n_classes": 2
+        },
+        {
+          "input": "{\"text1\": \"How can I increase the speed of my internet connection while using a VPN?\", \"text2\": \"How can Internet speed be increased by hacking through DNS?\"}",
+          "output": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_word_count_1": 14,
+          "metadata_word_count_2": 10,
+          "metadata_char_count_1": 73,
+          "metadata_char_count_2": 59,
+          "metadata_row_index": 2,
+          "metadata_task_type": "binary_classification",
+          "metadata_n_classes": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "metadata": {
+    "description": "Circular Text Fingerprints vs baseline methods for near-duplicate text detection",
+    "datasets": [
+      "Quora Question Pairs"
+    ],
+    "methods": [
+      "MinHash (k=1)",
+      "MinHash (k=2)",
+      "MinHash (k=3)",
+      "Character 4-gram Jaccard",
+      "Word-Unigram Jaccard",
+      "TF-IDF Cosine",
+      "CTF (R=1)",
+      "CTF (R=2)",
+      "CTF (R=3)"
+    ],
+    "evaluation_date": "2026-06-16T17:03:55.449633+00:00",
+    "n_train": 241875,
+    "n_test": 162415,
+    "bootstrap_samples": 1000,
+    "thresholds": {
+      "Quora Question Pairs": {
+        "MinHash (k=1)": 0.25,
+        "MinHash (k=2)": 0.06,
+        "MinHash (k=3)": 0.03,
+        "Character 4-gram Jaccard": 0.18,
+        "Word-Unigram Jaccard": 0.25,
+        "CTF (R=1)": 0.11,
+        "CTF (R=2)": 0.07,
+        "CTF (R=3)": 0.05,
+        "TF-IDF Cosine": 0.36
+      }
+    },
+    "performance_table": {
+      "Quora Question Pairs": {
+        "overall": {
+          "MinHash (k=1)": {
+            "precision": 0.506752492742648,
+            "recall": 0.8719803535032912,
+            "f1": 0.6409917903436757,
+            "support": 162415
+          },
+          "MinHash (k=2)": {
+            "precision": 0.4900920640412078,
+            "recall": 0.8519830264960406,
+            "f1": 0.6222455403987408,
+            "support": 162415
+          },
+          "MinHash (k=3)": {
+            "precision": 0.5014534299607507,
+            "recall": 0.6253800661565706,
+            "f1": 0.5566021604502301,
+            "support": 162415
+          },
+          "Character 4-gram Jaccard": {
+            "precision": 0.5169506225185985,
+            "recall": 0.8962043502956998,
+            "f1": 0.6556866100348346,
+            "support": 162415
+          },
+          "Word-Unigram Jaccard": {
+            "precision": 0.506752492742648,
+            "recall": 0.8719803535032912,
+            "f1": 0.6409917903436757,
+            "support": 162415
+          },
+          "CTF (R=1)": {
+            "precision": 0.500701966435777,
+            "recall": 0.8996792408700591,
+            "f1": 0.6433550560589679,
+            "support": 162415
+          },
+          "CTF (R=2)": {
+            "precision": 0.5008094227978118,
+            "recall": 0.8992782919576331,
+            "f1": 0.6433411815324306,
+            "support": 162415
+          },
+          "CTF (R=3)": {
+            "precision": 0.4972996763279266,
+            "recall": 0.906077717264192,
+            "f1": 0.6421539317661128,
+            "support": 162415
+          },
+          "TF-IDF Cosine": {
+            "precision": 0.48923060194456275,
+            "recall": 0.9019846971165091,
+            "f1": 0.6343784698355628,
+            "support": 162415
+          }
+        },
+        "by_word_count": {
+          "<=6": {
+            "MinHash (k=1)": {
+              "precision": 0.459716011610575,
+              "recall": 0.8889563106796117,
+              "f1": 0.6060292672837272,
+              "support": 16143
+            },
+            "MinHash (k=2)": {
+              "precision": 0.45790070674461214,
+              "recall": 0.7961165048543689,
+              "f1": 0.5813992134271312,
+              "support": 16143
+            },
+            "MinHash (k=3)": {
+              "precision": 0.4934482139651768,
+              "recall": 0.41702063106796117,
+              "f1": 0.45202663816492644,
+              "support": 16143
+            },
+            "Character 4-gram Jaccard": {
+              "precision": 0.4567500188864546,
+              "recall": 0.9171723300970874,
+              "f1": 0.609813908921277,
+              "support": 16143
+            },
+            "Word-Unigram Jaccard": {
+              "precision": 0.459716011610575,
+              "recall": 0.8889563106796117,
+              "f1": 0.6060292672837272,
+              "support": 16143
+            },
+            "CTF (R=1)": {
+              "precision": 0.45945526499573214,
+              "recall": 0.8982099514563107,
+              "f1": 0.6079367524000205,
+              "support": 16143
+            },
+            "CTF (R=2)": {
+              "precision": 0.4595622477491462,
+              "recall": 0.8982099514563107,
+              "f1": 0.6080303963852948,
+              "support": 16143
+            },
+            "CTF (R=3)": {
+              "precision": 0.4593839708278377,
+              "recall": 0.8982099514563107,
+              "f1": 0.6078743390996355,
+              "support": 16143
+            },
+            "TF-IDF Cosine": {
+              "precision": 0.4519296643069194,
+              "recall": 0.9006371359223301,
+              "f1": 0.6018551371078108,
+              "support": 16143
+            }
+          },
+          "7-15": {
+            "MinHash (k=1)": {
+              "precision": 0.5257562445085979,
+              "recall": 0.8694217277595583,
+              "f1": 0.6552624992178212,
+              "support": 120335
+            },
+            "MinHash (k=2)": {
+              "precision": 0.5093028413711526,
+              "recall": 0.857943459670389,
+              "f1": 0.6391723881981815,
+              "support": 120335
+            },
+            "MinHash (k=3)": {
+              "precision": 0.5180057725869244,
+              "recall": 0.6407281331728175,
+              "f1": 0.572868145123875,
+              "support": 120335
+            },
+            "Character 4-gram Jaccard": {
+              "precision": 0.5314089803140898,
+              "recall": 0.8976088671177715,
+              "f1": 0.6675877612769767,
+              "support": 120335
+            },
+            "Word-Unigram Jaccard": {
+              "precision": 0.5257562445085979,
+              "recall": 0.8694217277595583,
+              "f1": 0.6552624992178212,
+              "support": 120335
+            },
+            "CTF (R=1)": {
+              "precision": 0.519124308002013,
+              "recall": 0.8992278633401137,
+              "f1": 0.6582441959401969,
+              "support": 120335
+            },
+            "CTF (R=2)": {
+              "precision": 0.5191823522359429,
+              "recall": 0.8988542488272656,
+              "f1": 0.6581907164787063,
+              "support": 120335
+            },
+            "CTF (R=3)": {
+              "precision": 0.5159875645708477,
+              "recall": 0.9060359500186808,
+              "f1": 0.657518358124647,
+              "support": 120335
+            },
+            "TF-IDF Cosine": {
+              "precision": 0.5056543932957531,
+              "recall": 0.9067416663207273,
+              "f1": 0.649248352170973,
+              "support": 120335
+            }
+          },
+          "16+": {
+            "MinHash (k=1)": {
+              "precision": 0.4203364203364203,
+              "recall": 0.8742138364779874,
+              "f1": 0.5677089980855137,
+              "support": 25937
+            },
+            "MinHash (k=2)": {
+              "precision": 0.3860477314450564,
+              "recall": 0.8679245283018868,
+              "f1": 0.5343982573969868,
+              "support": 25937
+            },
+            "MinHash (k=3)": {
+              "precision": 0.40219224283305227,
+              "recall": 0.75,
+              "f1": 0.5236004390779363,
+              "support": 25937
+            },
+            "Character 4-gram Jaccard": {
+              "precision": 0.47548323686796984,
+              "recall": 0.8557389937106918,
+              "f1": 0.6113022113022113,
+              "support": 25937
+            },
+            "Word-Unigram Jaccard": {
+              "precision": 0.4203364203364203,
+              "recall": 0.8742138364779874,
+              "f1": 0.5677089980855137,
+              "support": 25937
+            },
+            "CTF (R=1)": {
+              "precision": 0.411004102015338,
+              "recall": 0.9058569182389937,
+              "f1": 0.5654520917678812,
+              "support": 25937
+            },
+            "CTF (R=2)": {
+              "precision": 0.4113494191242181,
+              "recall": 0.9046776729559748,
+              "f1": 0.565548593193267,
+              "support": 25937
+            },
+            "CTF (R=3)": {
+              "precision": 0.40293736501079913,
+              "recall": 0.9166666666666666,
+              "f1": 0.5598031566944728,
+              "support": 25937
+            },
+            "TF-IDF Cosine": {
+              "precision": 0.40345368916797486,
+              "recall": 0.858687106918239,
+              "f1": 0.5489727963812276,
+              "support": 25937
+            }
+          }
+        }
+      }
+    },
+    "confusion_matrices": {
+      "Quora Question Pairs": {
+        "MinHash (k=1)": {
+          "tn": 51753,
+          "fp": 50804,
+          "fn": 7663,
+          "tp": 52195
+        },
+        "MinHash (k=2)": {
+          "tn": 49497,
+          "fp": 53060,
+          "fn": 8860,
+          "tp": 50998
+        },
+        "MinHash (k=3)": {
+          "tn": 65340,
+          "fp": 37217,
+          "fn": 22424,
+          "tp": 37434
+        },
+        "Character 4-gram Jaccard": {
+          "tn": 52430,
+          "fp": 50127,
+          "fn": 6213,
+          "tp": 53645
+        },
+        "Word-Unigram Jaccard": {
+          "tn": 51753,
+          "fp": 50804,
+          "fn": 7663,
+          "tp": 52195
+        },
+        "CTF (R=1)": {
+          "tn": 48855,
+          "fp": 53702,
+          "fn": 6005,
+          "tp": 53853
+        },
+        "CTF (R=2)": {
+          "tn": 48902,
+          "fp": 53655,
+          "fn": 6029,
+          "tp": 53829
+        },
+        "CTF (R=3)": {
+          "tn": 47732,
+          "fp": 54825,
+          "fn": 5622,
+          "tp": 54236
+        },
+        "TF-IDF Cosine": {
+          "tn": 46189,
+          "fp": 56368,
+          "fn": 5867,
+          "tp": 53991
+        }
+      }
+    },
+    "statistical_comparison": {
+      "Quora Question Pairs": {
+        "comparison": "CTF (R=3) vs Character 4-gram Jaccard",
+        "mcnemar_p_value": 0.0,
+        "bootstrap_ci_f1_difference": {
+          "lower": -0.015046600866931183,
+          "upper": -0.01195011350220794,
+          "point_estimate": -0.013545712151502319
+        },
+        "significant": true
+      }
+    },
+    "score_distributions": {
+      "Quora Question Pairs": {
+        "MinHash (k=2)": {
+          "duplicate_summary": {
+            "mean": 0.25188240070809476,
+            "std": 0.2122544266830426,
+            "q10": 0.0357142873108387,
+            "q25": 0.09090909361839294,
+            "q50": 0.20000000298023224,
+            "q75": 0.3636363744735718,
+            "q90": 0.5714285969734192,
+            "n": 59858
+          },
+          "non_duplicate_summary": {
+            "mean": 0.15565238893534708,
+            "std": 0.21729008851564266,
+            "q10": 0.0,
+            "q25": 0.0,
+            "q50": 0.06666667014360428,
+            "q75": 0.20000000298023224,
+            "q90": 0.5,
+            "n": 102557
+          }
+        },
+        "TF-IDF Cosine": {
+          "duplicate_summary": {
+            "mean": 0.6342610503146751,
+            "std": 0.20304377544918634,
+            "q10": 0.36167582869529724,
+            "q25": 0.47714539617300034,
+            "q50": 0.6324951648712158,
+            "q75": 0.796861857175827,
+            "q90": 0.9172350645065308,
+            "n": 59858
+          },
+          "non_duplicate_summary": {
+            "mean": 0.41394382076663505,
+            "std": 0.2760848137894426,
+            "q10": 0.0158538606017828,
+            "q25": 0.19930411875247955,
+            "q50": 0.3971833288669586,
+            "q75": 0.6325207352638245,
+            "q90": 0.8109120726585388,
+            "n": 102557
+          }
+        },
+        "CTF (R=3)": {
+          "duplicate_summary": {
+            "mean": 0.17351918934885727,
+            "std": 0.15406950495499047,
+            "q10": 0.050847455859184265,
+            "q25": 0.07258064299821854,
+            "q50": 0.11666666716337204,
+            "q75": 0.21739129722118378,
+            "q90": 0.38461539149284363,
+            "n": 59858
+          },
+          "non_duplicate_summary": {
+            "mean": 0.11417603897159764,
+            "std": 0.15419346695464367,
+            "q10": 0.01149425283074379,
+            "q25": 0.02857142873108387,
+            "q50": 0.05376344174146652,
+            "q75": 0.11999999731779099,
+            "q90": 0.3333333432674408,
+            "n": 102557
+          }
+        }
+      }
+    },
+    "summary": "CTF (R=3) achieved F1=0.6422 vs best baseline Character 4-gram Jaccard F1=0.6557 on Quora Question Pairs (n_test=162415). McNemar p=0.000000 (significant at p<0.05). Bootstrap 95% CI on F1 difference: [-0.0150, -0.0120] (point estimate -0.0135). Stratified results: ['<=6', '7-15', '16+']. TF-IDF F1=0.6344. Best overall: Character 4-gram Jaccard F1=0.6557."
+  },
+  "datasets": [
+    {
+      "dataset": "Quora Question Pairs (sentence-transformers/quora-duplicates)",
+      "examples": [
+        {
+          "input": "{\"text1\": \"What is the current speed of Voyager 1 in mph?\", \"text2\": \"Where can I get best local or long distance furniture removal services in Central Coast?\"}",
+          "output": "0",
+          "predict_minhash_k1": "0",
+          "predict_minhash_k2": "0",
+          "predict_minhash_k3": "0",
+          "predict_ctf_r1": "0",
+          "predict_ctf_r2": "0",
+          "predict_ctf_r3": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 10,
+          "metadata_wc2": 15,
+          "metadata_stratum": "7-15",
+          "predict_character_4_gram_jaccard": "0",
+          "predict_word_unigram_jaccard": "0",
+          "predict_tf_idf_cosine": "0"
+        },
+        {
+          "input": "{\"text1\": \"How much is usa.care domain name worth?\", \"text2\": \"Is the artfulcom.com domain name worth something?\"}",
+          "output": "0",
+          "predict_minhash_k1": "1",
+          "predict_minhash_k2": "1",
+          "predict_minhash_k3": "1",
+          "predict_ctf_r1": "1",
+          "predict_ctf_r2": "1",
+          "predict_ctf_r3": "1",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 7,
+          "metadata_wc2": 7,
+          "metadata_stratum": "7-15",
+          "predict_character_4_gram_jaccard": "1",
+          "predict_word_unigram_jaccard": "1",
+          "predict_tf_idf_cosine": "1"
+        },
+        {
+          "input": "{\"text1\": \"What are some examples of archetypal settings in literature?\", \"text2\": \"Do you think ageism exists in the workplace?\"}",
+          "output": "0",
+          "predict_minhash_k1": "0",
+          "predict_minhash_k2": "0",
+          "predict_minhash_k3": "0",
+          "predict_ctf_r1": "0",
+          "predict_ctf_r2": "0",
+          "predict_ctf_r3": "0",
+          "metadata_is_duplicate": 0,
+          "metadata_wc1": 9,
+          "metadata_wc2": 8,
+          "metadata_stratum": "7-15",
+          "predict_character_4_gram_jaccard": "0",
+          "predict_word_unigram_jaccard": "0",
+          "predict_tf_idf_cosine": "0"
+        }
+      ]
+    }
+  ]
+}

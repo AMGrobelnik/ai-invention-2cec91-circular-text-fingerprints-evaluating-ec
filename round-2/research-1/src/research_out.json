@@ -1,0 +1,126 @@
+{
+  "title": "Non-Degenerate Baselines and Statistical Testing for Near-Duplicate Detection on Short Text",
+  "summary": "Complete specifications for three non-degenerate baseline algorithms (character 4-gram Jaccard, word-unigram Jaccard, TF-IDF cosine similarity) and rigorous statistical testing practices (McNemar's test, bootstrap confidence intervals) for evaluating near-duplicate detection on short text (8–20 words) using the Quora Question Pairs benchmark. Identifies critical methodological errors in the original experiment: degenerate MinHash baseline (τ=0.00 classifying all pairs as duplicates), short-text advantage claim based on n=9 uninformative samples, and missing proper threshold tuning and statistical significance testing.",
+  "answer": "## Three Non-Degenerate Baseline Algorithms\n\n### Character 4-Gram Jaccard Similarity\nThe character 4-gram shingle approach is the standard shingling technique in information retrieval [1, 2]. It extracts all contiguous 4-character substrings from text (e.g., 'hello' → {'hell', 'ello'}), builds sets of these shingles, and computes Jaccard similarity as J(A,B) = |A∩B| / |A∪B| [1, 2, 5].\n\n**Implementation:** Convert text to lowercase, generate all substrings of length k=4 using a sliding window, store in a set to remove duplicates, then compute the intersection and union [1, 5]. The computational complexity is O(length × k) for shingle extraction and O(count) space for storing shingles [1].\n\n**Hyperparameters:** k=4 is standard in IR; k=3 and k=5 are reasonable alternatives [7]. The algorithm has theoretical guarantees: MinHash with k hash functions approximates Jaccard with expected error proportional to 1/k [2, 4].\n\n**Threshold tuning:** Thresholds must be selected via grid search over [0.0, 1.0] on a held-out validation set to maximize F1 [1, 2, 7, 11]. For texts shorter than k characters, the method produces fewer shingles; standard approach: return Jaccard=0.0 if texts differ and 1.0 if identical [7].\n\n### Word-Unigram Jaccard Similarity\nThis simpler baseline tokenizes text into words, builds a set of unique words (unigrams), and computes Jaccard similarity [2, 7]. It is more robust to punctuation/whitespace variations than character n-grams but loses substring-level detail [2, 7].\n\n**Implementation:** Split text on whitespace, convert to lowercase, optionally strip punctuation, and store unique words in a set [7]. Computational complexity is O(word_count), significantly faster than character n-grams [2, 7].\n\n**No hyperparameters:** The algorithm is purely combinatorial [7]. For 8–20 word texts, this produces at most 10–20 unique unigrams, making the method sparse but interpretable [2, 7].\n\n**Threshold range:** [0.0, 1.0]; optimal thresholds are typically lower than character 4-grams due to sparsity [2, 7]. Single-word texts yield Jaccard=0 if different, 1.0 if identical [7].\n\n### TF-IDF Cosine Similarity\nTF-IDF weighting applies weights to words (TF(term) × log(N / DF(term))) to build sparse vectors in word space, then computes cosine similarity as the normalized dot product [3, 6, 8]. TF-IDF captures semantic relatedness better than Jaccard by downweighting common terms [3, 6, 8].\n\n**Implementation:** Use scikit-learn's TfidfVectorizer with defaults (sublinear_tf=True for dampening, norm='l2' for L2 normalization), fit on training data, transform test documents, and compute pairwise cosine_similarity [3, 6, 8]. L2 normalization ensures cosine ranges [0, 1] [3, 6].\n\n**Hyperparameters:** TfidfVectorizer defaults are good starting points: sublinear_tf=True, use_idf=True, norm='l2' [3, 6, 8].\n\n**Edge cases:** Single-word or stop-word-only texts produce sparse/zero vectors; cosine_similarity returns NaN for zero vectors. Standard fallback: replace NaN with 0.0 [3, 6, 8].\n\n## Threshold Tuning Protocol\n\nAll three baselines require threshold tuning to convert similarity scores to binary predictions [11, 12]:\n\n1. **Sweep thresholds:** Iterate τ ∈ [0.0, 1.0] in steps of 0.01 or 0.001 on the validation set (NOT test set to avoid data leakage) [11, 12].\n2. **Compute metrics:** For each τ, classify pairs as positive if similarity ≥ τ, compute precision, recall, F1 [11, 12].\n3. **Select optimal:** Choose τ that maximizes F1 on validation data [11, 12].\n4. **Evaluate on test:** Apply selected τ to held-out test set for final performance [11, 12].\n\n**Critical pitfall from original experiment:** The MinHash baseline used τ=0.00, classifying all pairs as duplicates. This yields precision=37% (proportion of actual duplicates), recall=100%, F1≈0.54 — a degenerate baseline [original experiment analysis]. Proper baselines require proper threshold tuning [11, 12].\n\n**Class imbalance handling:** On Quora Question Pairs (~63% negative, 37% positive), default 0.5 threshold biases toward majority class [11, 12, 15]. Threshold-moving is necessary to find optimal F1 for each baseline independently [11, 12].\n\n## Statistical Testing Methodology\n\n### McNemar's Test\nMcNemar's test is a non-parametric test for comparing two classifiers on the same test set [10, 13, 14]. It uses a 2×2 contingency table: rows=Classifier A (correct/incorrect), columns=Classifier B (correct/incorrect) [10, 13, 14].\n\nThe test statistic is χ² = (|b - c| - 1)² / (b + c), where b=A correct & B wrong, c=A wrong & B correct [10, 13, 14]. Null hypothesis: both classifiers have identical error distributions (b = c) [10, 13, 14].\n\n**When to use exact vs. approximate:** If (b + c) < 25, use exact binomial test (exact=True); if ≥25, use chi-squared approximation (exact=False) [10, 13, 14]. Dietterich (1998) evaluated five statistical tests and recommended McNemar's test for expensive-to-train models on single test splits [Dietterich reference].\n\n**Implementation:** `statsmodels.stats.contingency_tables.mcnemar(table, exact=True/False, correction=True)` [10].\n\n**Interpretation:** p-value < 0.05 indicates statistical significance. Report: \"Classifier A F1=0.75, Classifier B F1=0.70, McNemar p=0.032\" [10, 13, 14].\n\n### Bootstrap Confidence Intervals\nBootstrap provides distribution-free confidence intervals for any metric including F1 [17, 18, 19]. Standard procedure [17, 18, 19]:\n\n1. **Resample:** Resample test set WITH REPLACEMENT n_iterations times (default 10,000)\n2. **Compute:** Calculate F1 on each resample\n3. **Percentiles:** Extract 2.5th and 97.5th percentiles for 95% CI\n\n**Advantages:** Makes no parametric assumptions; works for any metric; non-overlapping CIs indicate approximately p < 0.05 significance [17, 18, 19].\n\n**Sample size implications:** Small test sets (n < 100) have wide CIs (±0.10–0.20); narrow CIs (±0.02) require n > 500 test pairs [17, 18, 19]. For the original experiment's n=9 short-text sample, CIs are approximately ±0.3, rendering any point estimate meaningless [statistical power].\n\n**Implementation:** Use numpy.random.choice(n_test, size=n_test, replace=True) for resample indices, compute metric, and numpy.percentile(results, [2.5, 97.5]) for CIs [17, 18, 19].\n\n**Cost:** Computationally cheaper than retraining: only metric recomputation [17, 18, 19].\n\n### Reporting Results\nPresent point estimates with uncertainty: \"CTF F1 = 0.75 (95% CI: 0.72–0.78) vs. Baseline F1 = 0.70 (95% CI: 0.67–0.73)\" [17, 18, 19]. Non-overlapping CIs indicate p < 0.05. Practical significance should be assessed separately: an F1 difference of 0.02 may be statistically significant but practically weak [17, 18, 19].\n\n## Quora Question Pairs Benchmark\n\nQQP is a standard NLU benchmark [15, 16]:\n- **Size:** ~400,000 question pairs, typically split ~364K train / 36K test [15, 16]\n- **Class distribution:** ~63% negative (non-duplicate), 37% positive (duplicate) — imbalanced [15, 16]\n- **Question length:** Average 10–25 words, aligning with target range 8–20 words [15, 16]\n- **Baseline results:** TF-IDF F1 ≈ 0.60–0.70; BERT fine-tuned F1 ≈ 0.85–0.90 [15, 16]\n\n**Sampling strategy:** To eliminate class imbalance effects on threshold tuning, create balanced subset: 5,000 positive + 5,000 negative pairs (50%-50%). Split as: 70% train (3,500), 15% validation (750), 15% test (750) with stratification to maintain class balance in each split [artifact plan].\n\n## Edge Case Handling\n\n1. **Character 4-gram short text:** For texts < 4 characters, return Jaccard=0.0 if different, 1.0 if identical [7]\n2. **Word-unigram:** Single-word texts handled gracefully (Jaccard=0 if different, 1.0 if identical) [7]\n3. **TF-IDF zero vectors:** Replace NaN (from zero-vector cosine similarity) with 0.0 [3, 6, 8]\n4. **Threshold boundaries:** At τ=0.0, all pairs predicted positive; at τ=1.0, all negative. Grid search must cover full [0.0, 1.0] range [11, 12]\n\n## Known Pitfalls and Corrections\n\n**Degenerate MinHash baseline:** Original experiment used τ=0.00, classifying all pairs as duplicates (F1≈0.54, 37% precision, 100% recall), invalidating the +0.0888 F1 improvement claim. Proper baselines require threshold tuning [original experiment analysis].\n\n**Short-text sample size:** Original claimed \"short-text advantage\" on n=9 test pairs (8–20 word stratum). This is statistically uninformative; F1 estimates have CIs of ±0.2–0.3, making any point difference meaningless [statistical power analysis].\n\n**Missing statistical testing:** Prior experiment lacked McNemar's test or bootstrap CIs. Without significance testing, cannot distinguish signal from noise, especially on small samples [13, 14, 17, 18].\n\n**Class imbalance confounds:** Without independent threshold tuning for each baseline, default 0.5 threshold may favor one algorithm for spurious reasons unrelated to true performance [11, 12].",
+  "sources": [
+    {
+      "index": 1,
+      "url": "https://nlp.stanford.edu/IR-book/html/htmledition/near-duplicates-and-shingling-1.html",
+      "title": "Near-duplicates and shingling — Stanford NLP Group Information Retrieval Book",
+      "summary": "Authoritative reference on shingling technique, k-shingles definition, Jaccard coefficient, and MinHash probabilistic approximation with theoretical guarantees. Core foundational reference for character n-gram approaches."
+    },
+    {
+      "index": 2,
+      "url": "https://blog.nelhage.com/post/fuzzy-dedup/",
+      "title": "Finding near-duplicates with Jaccard similarity and MinHash",
+      "summary": "Comprehensive explanation of Jaccard similarity for deduplication, MinHash approximation with multiple hash functions, sampling theory, and scale-efficient strategies used in GPT-3 dataset preparation."
+    },
+    {
+      "index": 3,
+      "url": "https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html",
+      "title": "TfidfVectorizer — scikit-learn 1.9.0 documentation",
+      "summary": "API documentation for TF-IDF vectorization including default parameters (sublinear_tf, use_idf, norm), L2 normalization, and cosine similarity computation."
+    },
+    {
+      "index": 4,
+      "url": "https://en.wikipedia.org/wiki/MinHash",
+      "title": "MinHash — Wikipedia",
+      "summary": "Mathematical foundations of MinHash algorithm, min-wise independence, and probabilistic Jaccard similarity estimation with k independent hash functions."
+    },
+    {
+      "index": 5,
+      "url": "https://dzone.com/articles/shingling-for-similarity-and-plagiarism-detection",
+      "title": "Shingling for Similarity and Plagiarism Detection — DZone",
+      "summary": "Comprehensive tutorial on shingling technique, character n-grams (k-shingles), word n-grams, Jaccard formula with working Python code examples, and threshold selection."
+    },
+    {
+      "index": 6,
+      "url": "https://medium.com/web-mining-is688-spring-2021/cosine-similarity-and-tfidf-c2a7079e13fa",
+      "title": "Cosine Similarity and TFIDF — Medium",
+      "summary": "Practical explanation of TF-IDF weighting scheme, cosine similarity metric definition, L2 normalization for text similarity, and semantic relatedness."
+    },
+    {
+      "index": 7,
+      "url": "https://www.shadecoder.com/topics/character-n-gram-f-score-a-comprehensive-guide-for-2025",
+      "title": "Character N-gram F-score: A Comprehensive Guide for 2025 — Shade Coder",
+      "summary": "Detailed guide on character n-gram extraction, shingle size selection (k=3,4,5), and handling edge cases for very short text strings."
+    },
+    {
+      "index": 8,
+      "url": "https://stackoverflow.com/questions/12118720/python-tf-idf-cosine-to-find-document-similarity",
+      "title": "Python: tf-idf-cosine to find document similarity — Stack Overflow",
+      "summary": "Practical code examples for TF-IDF vectorization using scikit-learn and cosine similarity computation between documents."
+    },
+    {
+      "index": 9,
+      "url": "https://en.wikipedia.org/wiki/Jaccard_index",
+      "title": "Jaccard index — Wikipedia",
+      "summary": "Mathematical definition of Jaccard similarity, set-based formulation J(A,B) = |A∩B|/|A∪B|, properties, and asymptotic bounds."
+    },
+    {
+      "index": 10,
+      "url": "https://www.statsmodels.org/dev/generated/statsmodels.stats.contingency_tables.mcnemar.html",
+      "title": "statsmodels.stats.contingency_tables.mcnemar — statsmodels documentation",
+      "summary": "API documentation for McNemar's test implementation, exact binomial vs. chi-squared options, contingency table format, and parameter descriptions."
+    },
+    {
+      "index": 11,
+      "url": "https://scikit-learn.org/stable/modules/classification_threshold.html",
+      "title": "3.3. Tuning the decision threshold for class prediction — scikit-learn documentation",
+      "summary": "Guidelines for binary classification threshold selection, precision-recall tradeoff, F1 optimization, and handling imbalanced datasets."
+    },
+    {
+      "index": 12,
+      "url": "https://medium.com/@eric.likp/imbalanced-datasets-threshold-tuning-with-roc-and-pr-curves-de4eb7417e97",
+      "title": "[Imbalanced Datasets] Threshold Tuning with ROC and PR Curves — Medium",
+      "summary": "Practical guidance on threshold tuning for imbalanced classification using precision-recall curves, ROC curves, and F1 optimization techniques."
+    },
+    {
+      "index": 13,
+      "url": "https://rasbt.github.io/mlxtend/user_guide/evaluate/mcnemar/",
+      "title": "McNemar's test for classifier comparisons — mlxtend documentation",
+      "summary": "Detailed explanation of McNemar's test methodology, 2×2 contingency table construction, test statistic calculation, and result interpretation for paired classifier comparison."
+    },
+    {
+      "index": 14,
+      "url": "https://towardsdatascience.com/mcnemars-test-to-evaluate-machine-learning-classifiers-with-python-9f26191e1a6b",
+      "title": "McNemar's Test to evaluate Machine Learning Classifiers with Python — Towards Data Science",
+      "summary": "Practical tutorial on computing and interpreting McNemar's test with Python implementation examples and real-world use cases."
+    },
+    {
+      "index": 15,
+      "url": "https://www.kaggle.com/datasets/quora/question-pairs-dataset",
+      "title": "Question Pairs Dataset — Kaggle",
+      "summary": "Quora Question Pairs dataset description, approximate size (~400K pairs), class distribution (63% negative, 37% positive), and benchmark information."
+    },
+    {
+      "index": 16,
+      "url": "https://quoradata.quora.com/First-Quora-Dataset-Release-Question-Pairs",
+      "title": "First Quora Dataset Release: Question Pairs — Quora Data Blog",
+      "summary": "Original dataset announcement with exact dataset statistics, task description, baseline results (TF-IDF F1~0.60-0.70), and question length characteristics."
+    },
+    {
+      "index": 17,
+      "url": "https://tidymodels.org/learn/models/bootstrap-metrics/",
+      "title": "Confidence Intervals for Performance Metrics — tidymodels",
+      "summary": "Bootstrap methodology for computing confidence intervals on machine learning metrics, percentile calculation, sample size implications, and interpretation guidelines."
+    },
+    {
+      "index": 18,
+      "url": "https://towardsdatascience.com/get-confidence-intervals-for-any-model-performance-metrics-in-machine-learning-f9e72a3becb2",
+      "title": "How to calculate confidence intervals for performance metrics using Bootstrap — Towards Data Science",
+      "summary": "Practical guide to bootstrap confidence intervals with Python implementation for F1, precision, recall, and other metrics using numpy."
+    },
+    {
+      "index": 19,
+      "url": "https://github.com/luferrer/ConfidenceIntervals",
+      "title": "Confidence Intervals for Evaluation in Machine Learning — GitHub",
+      "summary": "Reference implementation of bootstrap confidence intervals for machine learning metrics and thorough evaluation methodology."
+    }
+  ],
+  "follow_up_questions": [
+    "Once all three baselines are properly implemented and thresholds are independently tuned on Quora Question Pairs validation set, what are the resulting F1 scores, optimal thresholds, and 95% bootstrap CIs? Do baselines cluster into different performance tiers?",
+    "How do baseline F1 scores vary across text length strata (8–12 vs. 13–17 vs. 18–20 words)? Does short-text regime systematically favor word-unigram over character 4-gram due to sparsity?",
+    "When Circular Text Fingerprints are evaluated on the same test set and compared via McNemar's test and bootstrap CIs, do non-overlapping confidence intervals confirm statistically significant improvements over all three non-degenerate baselines?"
+  ]
+}

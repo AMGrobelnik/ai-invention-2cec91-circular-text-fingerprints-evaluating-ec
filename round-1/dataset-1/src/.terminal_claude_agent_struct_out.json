@@ -1,0 +1,19 @@
+{
+  "title": "Quora Question Pairs Dataset: 404k Balanced Near-Duplicate Pairs for CTF Evaluation",
+  "layman_summary": "Prepares the Quora Question Pairs dataset (404,290 short text pairs labeled as duplicate or not) as a clean, schema-validated benchmark for testing near-duplicate text detection methods.",
+  "summary": "Selected and prepared the Quora Question Pairs (QQP) dataset from HuggingFace (sentence-transformers/quora-duplicates, pair-class config) for evaluating Circular Text Fingerprints vs MinHash n-gram baseline on near-duplicate short text detection.\n\nDataset characteristics:\n- Source: sentence-transformers/quora-duplicates (pair-class), originally from Quora Kaggle Competition\n- Total examples: 404,290 question pairs\n- Labels: binary (0 = non-duplicate, 1 = duplicate)\n- Class balance: 149,263 duplicates (36.9%) / 255,027 non-duplicates (63.1%)\n- Text length: median 9 words per question (short-text domain, ideal for n-gram stress-testing)\n- Diverse paraphrase types: lexical substitutions, word-order variation, minor rewording\n\nSchema per example:\n- input: JSON string with {\"text1\": ..., \"text2\": ...}\n- output: binary label as string (\"0\" or \"1\")\n- metadata_is_duplicate: int (0/1)\n- metadata_word_count_1/2: whitespace-split word counts\n- metadata_char_count_1/2: character lengths\n- metadata_row_index: original dataset row index\n- metadata_task_type: \"binary_classification\"\n- metadata_n_classes: 2\n\nOutput files:\n- full_data_out/ (3 parts, ~55 MB each, 134k-135k examples per part)\n- mini_data_out.json (3 examples)\n- preview_data_out.json (3 examples, strings truncated)\n\nValidation: schema validated against exp_sel_data_out.json, all required fields present, no nulls.\n\nWhy QQP over PAWS: QQP has natural short questions (median 9 words) matching the ideal_dataset_criteria (<40 chars for short pairs, 10-80 word target range). PAWS has longer Wikipedia sentences (avg 17+ words, artificially word-scrambled), less representative of the short-text near-duplicate target domain.",
+  "out_expected_files": {
+    "script": "data.py",
+    "datasets": [
+      {
+        "full": [
+          "full_data_out/full_data_out_1.json",
+          "full_data_out/full_data_out_2.json",
+          "full_data_out/full_data_out_3.json"
+        ],
+        "mini": "mini_data_out.json",
+        "preview": "preview_data_out.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "QQP and PAWS-Wiki Near-Duplicate Detection Datasets",
+  "layman_summary": "Prepares Quora Question Pairs (40k short questions) and PAWS-Wiki (8k adversarial Wikipedia pairs) as labeled binary classification examples for evaluating near-duplicate text detection.",
+  "summary": "This dataset artifact prepares two high-quality, human-labeled NLP benchmark datasets for evaluating near-duplicate short text detection:\n\n1. **GLUE QQP Validation** (40,430 examples): Quora Question Pairs from the GLUE benchmark. Each example is a JSON object with question1 and question2 fields, labeled as 'duplicate' or 'not_duplicate'. Questions range from short (≤6 words, 'short' stratum) to medium (7–15 words) and long (16+ words), providing rich stratification for length-sensitive evaluation. Sourced from the official Kaggle Quora competition dataset, widely used in NLP benchmarking since 2017.\n\n2. **PAWS-Wiki Test** (8,000 examples): Paraphrase Adversaries from Word Scrambling (PAWS), Wikipedia subset test split. Each example contains sentence1/sentence2 pairs with high lexical overlap constructed to be adversarially challenging — many non-paraphrase pairs share nearly identical word sets but differ in structure. This cross-domain challenge set (Wikipedia vs. Quora questions) enables robust evaluation of precision/recall tradeoffs. Published at NAACL 2019 (Zhang et al.), 82k HuggingFace downloads.\n\nAll 48,430 examples are standardized to the exp_sel_data_out.json schema with:\n- `input`: JSON string of text pair (question1/question2 or sentence1/sentence2)\n- `output`: 'duplicate' or 'not_duplicate'\n- `metadata_stratum`: length category ('short', 'medium', 'long') based on average word count\n- `metadata_label_int`: integer label (0=not_duplicate, 1=duplicate)\n- `metadata_task_type`: 'binary_classification'\n- `metadata_word_count_*`: word counts per text field\n\nStratification metadata enables ≥100 test pairs per length stratum for statistically meaningful evaluation across short, medium, and long text regimes. Output validated against exp_sel_data_out.json schema.",
+  "out_expected_files": {
+    "script": "data.py",
+    "datasets": [
+      {
+        "full": ["full_data_out.json"],
+        "mini": "mini_data_out.json",
+        "preview": "preview_data_out.json"
+      }
+    ]
+  }
+}
